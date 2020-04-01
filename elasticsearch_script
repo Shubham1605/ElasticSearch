@@ -1,0 +1,128 @@
+Restart command - systemctl restart elasticsearch
+
+To list all indices - http://localhost:9200/_cat/indices
+
+For uninstalling - https://www.howtoinstall.co/en/ubuntu/xenial/elasticsearch?action=remove
+ After following instruction in site, run the fllowing 3 command
+> sudo rm -rf /var/lib/elasticsearch/
+> sudo rm -rf /etc/elasticsearch
+>  curl -XDELETE 'http://localhost:9200/*'
+
+For installing - https://linuxize.com/post/how-to-install-elasticsearch-on-ubuntu-18-04/
+
+To change folder permission(recursively) -  “sudo chmod -R a+rwx /path/to/folder” 
+
+
+
+curl -XPUT localhost:9200/hello5 -H 'Content-Type: application/json' -d '
+ {
+  "mappings": {
+  "properties":{
+  "sr_No":{"type": "integer"},
+  "provider_Name":{"type":"text"},
+  "address":{"type":"text"},
+  "city_Name":{"type":"text"},
+  "state_Name":{"type":"text"},
+  "pin_Code":{"type": "integer"},
+  "tel_No":{"type":"text"},
+  "fax_No":{"type":"text"},
+  "provider_No":{"type": "integer"}
+   }
+   }
+  }'
+
+
+
+curl -XPUT localhost:9200/hospitallocator -H 'Content-Type: application/json' -d '
+{
+  "settings": {
+    "analysis": {
+        "analyzer": {
+            "hospital_analyzer": {
+                "tokenizer": "standard",
+                "filter": [
+                    "custom_stop",
+                    "english_stop","lowercase"	    
+                ]
+            },
+	    "source_analyzer" : {
+                    "tokenizer" : "standard",
+                    "filter" : ["lowercase"]
+               }
+        },
+        "filter": {
+            "custom_stop": {
+                "type":       "stop",
+                "stopwords": ["hospital","hospitals"]
+            },
+            "english_stop": {
+                "type":       "stop",
+                "stopwords":  "_english_"
+            }
+        }
+    }
+  },
+  "mappings": {
+  "properties":{
+  "srNo":{"type": "integer"},
+  "hospitalCode":{"type":"keyword","index": "false"},
+  "hospitalName":{
+        "type": "text",
+        "analyzer": "hospital_analyzer"
+      },
+  "hospitalAddess":{
+        "type": "text",
+	"analyzer": "hospital_analyzer"
+      },
+  "location":{
+        "type": "text",
+	"analyzer": "hospital_analyzer"
+      },
+  "cityName":{
+        "type": "text",
+        "analyzer": "hospital_analyzer"
+      },
+  "stateName":{
+        "type": "text",
+        "analyzer": "hospital_analyzer"
+      },
+  "pinCode":{"type": "keyword","index":"true"},
+  "hospitalType":{"type":"text","index": "false"},
+  "contactNumber":{"type":"keyword","index": "false"},
+  "category":{"type":"keyword","index": "false"},
+  "source":{
+        "type": "text",
+        "analyzer": "source_analyzer"
+      },
+  "fax":{"type":"keyword","index": "false"},
+  "zone":{"type":"text","index": "false"},
+  "email":{"type": "text","index": "false"},
+  "contactPerson":{"type": "text","index": "false"},
+  "designation":{"type": "text","index": "false"},
+   "contactNo":{"type": "text","index": "false"},
+  "providerManager":{"type": "text","index": "false"},
+   "zonalHead":{"type": "text","index": "false"},
+   "epcr":{"type": "text","index": "false"},
+   "networkType":{"type": "text","index": "false"}
+   }
+   }
+}'
+
+
+srNo|hospitalCode|hospitalName|hospitalAddess|location|cityName|pinCode|stateName|hospitalType|contactNumber|category|source|fax|zone|email|contactPerson|designation|contactNo|providerManager|zonalHead|epcr|networkType
+
+cd /usr/share/logstash/
+sudo bin/logstash -f /etc/logstash/conf.d/logstash.conf 
+
+
+curl -XGET localhost:9200/hello/_search?pretty -H 'Content-Type: application/json' -d '
+{
+"query": {
+"match":{
+"Provider_Name":"KAUSALYA MEDICAL CENTER"
+}
+}
+}
+'
+
+
