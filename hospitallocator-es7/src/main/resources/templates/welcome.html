@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Hospital Locator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+</head>
+<style>
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting:before,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_asc:before,
+    table.dataTable thead .sorting_asc_disabled:after,
+    table.dataTable thead .sorting_asc_disabled:before,
+    table.dataTable thead .sorting_desc:after,
+    table.dataTable thead .sorting_desc:before,
+    table.dataTable thead .sorting_desc_disabled:after,
+    table.dataTable thead .sorting_desc_disabled:before {
+        bottom: .5em;
+    }
+
+    #dtVerticalScrollExample{
+        margin-top: 20px;
+    }
+</style>
+<body>
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+        <h1>Hospital Locator</h1>
+        <form class="col-12" th:action="@{/city}" method="get">
+            <div class="input-group input-group-lg">
+                <input type="text" class="form-control" name="query" placeholder="Enter Hospital,Insurer or Location" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            </div>
+            <br>
+            <div class="input-group input-group-lg">
+                <input type="text" class="form-control" name="city" placeholder="Enter City Name" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            </div>
+            <br>
+            <div class="input-group input-group-lg">
+                <input type="text" class="form-control" name="source" placeholder="Enter Source Name" aria-label="Source Name" aria-describedby="basic-addon2">
+            </div>
+            <br><br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+                    <div class="col-12" th:switch="${hospitals}">
+                        <div>
+                            <h2 th:case="null">No record found !!</h2>
+                            <div th:case="*">
+                                <table id="dtVerticalScrollExample" class="table table-striped table-bordered table-sm" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th class="th-sm">Hospital Code</th>
+                                        <th class="th-sm">Hospital Name</th>
+                                        <th class="th-sm">Address</th>
+                                        <th class="th-sm">Location</th>
+                                        <th class="th-sm">City</th>
+                                        <th class="th-sm">PinCode</th>
+                                        <th class="th-sm">State</th>
+                                        <th class="th-sm">Hospital Type</th>
+                                        <th class="th-sm">Contact No.</th>
+                                        <th class="th-sm">Category</th>
+                                        <th class="th-sm">Source</th>
+                                        <th class="th-sm">Fax</th>
+                                        <th class="th-sm">Zone</th>
+                                        <th class="th-sm">Email</th>
+                                        <th class="th-sm">Contact Person</th>
+                                        <th class="th-sm">Designation</th>
+                                        <th class="th-sm">Contact No.</th>
+                                        <th class="th-sm">hospital Manager</th>
+                                        <th class="th-sm">Zonal Head</th>
+                                        <th class="th-sm">EP CR</th>
+                                        <th class="th-sm">Network Type</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="hospital : ${hospitals}">
+                                        <td th:text="${hospital.hospitalCode}"></td>
+                                        <td th:text="${hospital.hospitalName}"></td>
+                                        <td th:text="${hospital.hospitalAddess}"></td>
+                                        <td th:text="${hospital.location}"></td>
+                                        <td th:text="${hospital.cityName}"></td>
+                                        <td th:text="${hospital.pinCode}"></td>
+                                        <td th:text="${hospital.stateName}"></td>
+                                        <td th:text="${hospital.hospitalType}"></td>
+                                        <td th:text="${hospital.contactNumber}"></td>
+                                        <td th:text="${hospital.category}"></td>
+                                        <td th:text="${hospital.source}"></td>
+                                        <td th:text="${hospital.fax}"></td>
+                                        <td th:text="${hospital.zone}"></td>
+                                        <td th:text="${hospital.email}"></td>
+                                        <td th:text="${hospital.contactPerson}"></td>
+                                        <td th:text="${hospital.designation}"></td>
+                                        <td th:text="${hospital.contactNo}"></td>
+                                        <td th:text="${hospital.providerManager}"></td>
+                                        <td th:text="${hospital.zonalHead}"></td>
+                                        <td th:text="${hospital.epcr}"></td>
+                                        <td th:text="${hospital.networkType}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+    </div>
+</div>
+
+</body>
+<script>
+    $(document).ready(function () {
+        $('#dtVerticalScrollExample').DataTable({
+            "scrollY": "400px",
+            "scrollX":true,
+            "scrollCollapse": true,
+            "order": []
+        });
+        $('.dataTables_length').addClass('bs-select');
+    });
+</script>
+
+</html>
