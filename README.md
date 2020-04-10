@@ -1,7 +1,6 @@
-<<<<<<< HEAD
-# self
-To keep record of libraries or work around used when stucked in an issue
-=======
-# ElasticSearch
-Document on elasticsearch prepared while working on free text search app
->>>>>>> 07283a60ff70698b439a608c4bdbb73a14456010
+logstash.conf is used to upload csv data in elasticsearch.
+elasticsearch_script has various scripts to create mappings of index.This project utilizes hospitallocator index mapping.
+The application runs on port 8080.To run the application elasticsearch needs to be setup and must be started.
+Thymeleaf is used for creating UI.
+Java high rest client is used to query on ElasticSearch 7.5 in spring boot application.
+es7_udemy is notes that I prepared while working with this module.It explains most of the needed terminologies.
