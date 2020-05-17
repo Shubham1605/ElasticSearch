@@ -1,4 +1,5 @@
-This project creates a free text search, i.e to allow search on natural language on hospital records.
+## This project creates a free text search, i.e to allow search on natural language on hospital records.
+
 1. logstash.conf is used to upload csv data in elasticsearch.
 2. elasticsearch_script has various scripts to create mappings of index.This project utilizes hospitallocator index mapping.
 3. The application runs on port 8080.To run the application elasticsearch needs to be setup and must be started.
